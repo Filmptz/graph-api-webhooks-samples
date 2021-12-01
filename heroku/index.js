@@ -20,21 +20,23 @@
  
  var token = process.env.TOKEN || 'token';
  var received_updates = [];
+
  const emitter = new EventEmitter()
  
  app.get('/', function(req, res) {
- 
+  
    res.writeHead(200, {
      Connection: 'keep-alive',
      'Content-Type': 'text/event-stream',
      'Cache-Control': 'no-cache'
    })
- 
+   res.write(`Start Streaming Message\n\n`)
+
    const onMessage = data => {
      res.write(`data: ${JSON.stringify({
-       sender: data.entry[0].messaging[0].sender.id,
-       msg: data.entry[0].messaging[0].message.text,
-       timestamp: data.entry[0].messaging[0].timestamp
+      sender: data.entry[0].messaging[0].sender.id,
+      msg: data.entry[0].messaging[0].message,
+      timestamp: data.entry[0].messaging[0].timestamp
      })}\n\n`)
    }
    emitter.on('message', onMessage)
