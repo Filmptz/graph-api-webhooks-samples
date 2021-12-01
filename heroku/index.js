@@ -25,27 +25,27 @@
  
  app.get('/', function(req, res) {
   
-  //  res.writeHead(200, {
-  //    Connection: 'keep-alive',
-  //    'Content-Type': 'text/event-stream',
-  //    'Cache-Control': 'no-cache'
-  //  })
-  //  res.write(`Start Streaming Message\n\n`)
+   res.writeHead(200, {
+     Connection: 'keep-alive',
+     'Content-Type': 'text/event-stream; charset=UTF-8',
+     'Cache-Control': 'no-cache'
+   })
+   res.write(`Start Streaming Message\n\n`)
 
-  //  const onMessage = data => {
-  //    res.write(`data: ${JSON.stringify({
-  //     sender: data.entry[0].messaging[0].sender.id,
-  //     msg: data.entry[0].messaging[0].message,
-  //     timestamp: data.entry[0].messaging[0].timestamp
-  //    })}\n\n`)
-  //  }
-  //  emitter.on('message', onMessage)
+   const onMessage = data => {
+     res.write(`data: ${JSON.stringify({
+      sender: data.entry[0].messaging[0].sender.id,
+      text: data.entry[0].messaging[0].message.text ? data.entry[0].messaging[0].message.text : false,
+      timestamp: data.entry[0].messaging[0].timestamp
+     })}\n\n`)
+   }
+   emitter.on('message', onMessage)
  
-  //  req.on('close', function() {
-  //    emitter.removeListener('message', onMessage)
-  //  })
+   req.on('close', function() {
+     emitter.removeListener('message', onMessage)
+   })
  
-   res.send(`data: ${JSON.stringify(received_updates, null, 2)}\n\n`)
+   //res.write(`data: ${JSON.stringify(received_updates, null, 2)}\n\n`)
  });
  
  app.get(['/facebook', '/instagram'], function(req, res) {
@@ -78,8 +78,8 @@
    console.log('Instagram request body:');
    console.log(req.body);
    // Process the Instagram updates here
-   //emitter.emit('message', req.body)
-   received_updates.unshift(req.body);
+   emitter.emit('message', req.body)
+   //received_updates.unshift(req.body);
    res.sendStatus(200);
  });
  
