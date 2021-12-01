@@ -47,6 +47,33 @@
  
    //res.write(`data: ${JSON.stringify(received_updates, null, 2)}\n\n`)
  });
+
+ app.get('/:user_ig_id', function(req, res) {
+  
+  res.writeHead(200, {
+    Connection: 'keep-alive',
+    'Content-Type': 'text/event-stream; charset=UTF-8',
+    'Cache-Control': 'no-cache'
+  })
+  res.write(`Start Streaming Message\n\n`)
+
+  const onMessage = data => {
+    if ((data.entry[0].messaging[0].sender.id) === (req.params.user_ig_id)) {
+      res.write(`data: ${JSON.stringify({
+        sender: data.entry[0].messaging[0].sender.id,
+        text: data.entry[0].messaging[0].message.text ? data.entry[0].messaging[0].message.text : false,
+        timestamp: data.entry[0].messaging[0].timestamp
+       })}\n\n`)
+    }
+  }
+  emitter.on('message', onMessage)
+
+  req.on('close', function() {
+    emitter.removeListener('message', onMessage)
+  })
+
+  //res.write(`data: ${JSON.stringify(received_updates, null, 2)}\n\n`)
+});
  
  app.get(['/facebook', '/instagram'], function(req, res) {
    if (
