@@ -16,11 +16,12 @@ router
 		const onMessage = (data) => {
 			res.write(
 				`data: ${JSON.stringify({
-					sender: data.entry[0].messaging[0].sender.id,
-					text: data.entry[0].messaging[0].message.text
-						? data.entry[0].messaging[0].message.text
-						: false,
-					timestamp: data.entry[0].messaging[0].timestamp
+					data
+					// sender: data.entry[0].messaging[0].sender.id,
+					// text: data.entry[0].messaging[0].message.text
+					// 	? data.entry[0].messaging[0].message.text
+					// 	: false,
+					// timestamp: data.entry[0].messaging[0].timestamp
 				})}\n\n`
 			)
 		}
