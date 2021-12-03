@@ -14,7 +14,7 @@ router
 		})
 		res.write('Start Streaming Message\n\n')
  
-		FB.setAccessToken('EAACZCmYt8wZBEBAJhECUfQRwQtY3xxb5DJmk1YY5ek7ZASxEiZByvLNlKSuAE4WgLhwtLDo3KJxKMX8mxpNyQM0L4kfs1OFFi6HGgwn6ZCzDt7TPwNgPkp6Y9PatNkCBzR6TuWuKhBiogTniio1xQHty7QWjwRhZClowoYpuDkh6tQMs0IwdprwsYtUgGnvRKFNOA3jR5blgZDZD')
+		FB.setAccessToken('EAACZCmYt8wZBEBAPaFqgtb7pa90RB7VZB1ALZBf9ZB4KfCn4gbXu65sKD7IJZACPRVJByjGGbKkLxNjIHvRSUgh1YG4hInKbupiZAlgbDyqdwlI5MnuSxQHft8gUyIi3suB4lXtDkaf74rNSCQW6jRtfRa7DVOZA0YhRU9S03XEvHehahShMys9DDjvMZAnZC6KpsxtVskFSEhUQZDZD')
 		const onMessage = async (data) => {
 			res.write(
 				`data: ${JSON.stringify({
