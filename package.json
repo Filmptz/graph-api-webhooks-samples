@@ -10,7 +10,8 @@
     "body-parser": "~1.15.0",
     "eventemitter3": "^4.0.7",
     "express": "~4.13.3",
-    "express-x-hub": "^1.0.4"
+    "express-x-hub": "^1.0.4",
+    "fb": "^2.0.0"
   },
   "engines": {
     "node": "16.x"
