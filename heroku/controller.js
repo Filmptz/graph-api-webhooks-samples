@@ -49,13 +49,7 @@ router
 		const onMessage = (data) => {
 			if (data.entry[0].messaging[0].sender.id === req.params.user_ig_id) {
 				res.write(
-					`data: ${JSON.stringify({
-						sender: data.entry[0].messaging[0].sender.id,
-						text: data.entry[0].messaging[0].message.text
-							? data.entry[0].messaging[0].message.text
-							: false,
-						timestamp: data.entry[0].messaging[0].timestamp
-					})}\n\n`
+					`data: ${JSON.stringify(data)}\n\n`
 				)
 			}
 		}
