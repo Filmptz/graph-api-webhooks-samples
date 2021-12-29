@@ -17,18 +17,9 @@ router
 		FB.setAccessToken(process.env.FB_TOKEN)
 		const onMessage = async (data) => {
 			res.write(
-				`data: ${JSON.stringify({
-					sender: {
-						ig_id: data.entry[0].messaging[0].sender.id,
-						profile_url: (await FB.api(`${data.entry[0].messaging[0].sender.id}`)).profile_pic
-						? (await FB.api(`${data.entry[0].messaging[0].sender.id}`)).profile_pic
-						: ''
-					},
-					text: data.entry[0].messaging[0].message.text
-						? data.entry[0].messaging[0].message.text
-						: false,
-					timestamp: data.entry[0].messaging[0].timestamp
-				})}\n\n`
+				`data: ${JSON.stringify(
+					data
+				)}\n\n`
 			)
 		}
 		emitter.on('message', onMessage)
@@ -49,7 +40,13 @@ router
 		const onMessage = (data) => {
 			if (data.entry[0].messaging[0].sender.id === req.params.user_ig_id) {
 				res.write(
-					`data: ${JSON.stringify(data)}\n\n`
+					`data: ${JSON.stringify({
+						sender: data.entry[0].messaging[0].sender.id,
+						text: data.entry[0].messaging[0].message.text
+							? data.entry[0].messaging[0].message.text
+							: false,
+						timestamp: data.entry[0].messaging[0].timestamp
+					})}\n\n`
 				)
 			}
 		}
