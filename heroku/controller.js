@@ -66,6 +66,27 @@ router
 		})
 	})
 
+	.get('/raw', function (req, res) {
+		res.writeHead(200, {
+			Connection: 'keep-alive',
+			'Content-Type': 'text/event-stream; charset=UTF-8',
+			'Cache-Control': 'no-cache'
+		})
+		res.write('Start Streaming Message\n\n')
+ 
+		FB.setAccessToken(process.env.FB_TOKEN)
+		const onMessage = async (data) => {
+			res.write(
+				`data: ${JSON.stringify(data)}\n\n`
+			)
+		}
+		emitter.on('message', onMessage)
+
+		req.on('close', function () {
+			emitter.removeListener('message', onMessage)
+		})
+	})
+
 	.get('/instagram', function (req, res) {
 		if (req.query['hub.mode'] === 'subscribe' && req.query['hub.verify_token'] === process.env.TOKEN) {
 			res.send(req.query['hub.challenge'])
